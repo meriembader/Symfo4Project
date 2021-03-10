@@ -51,6 +51,19 @@ class User implements UserInterface, \Serializable {
      */
     private $roles = array();
 
+    protected $captchaCode;
+
+    public function getCaptchaCode()
+    {
+        return $this->captchaCode;
+    }
+
+    public function setCaptchaCode($captchaCode)
+    {
+        $this->captchaCode = $captchaCode;
+    }
+
+
     public function __construct() {
         $this->isActive = true;
         // may not be needed, see section on salt below
