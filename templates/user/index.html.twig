@@ -7,46 +7,136 @@
     <br>
 
 
-    <h4>Liste des Utilisateurs</h4>
-<br>
-    <br>
 
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+
+    <div class=" container">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <h4>Gestion des Users </h4>
+
+                <div class="table-data__tool">
+                    <div class="table-data__tool-left">
 
 
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>IsActive</th>
-                <th>Roles</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
-                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
-                <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </div>
+                    <div class="table-data__tool-right">
 
+                        <button class="au-btn au-btn-icon au-btn--green au-btn--small" >
+
+                            <a href="{{ path('user_listPdf') }}"> <i class="zmdi zmdi-plus"></i>PDF</a>
+                        </button>
+                        <button class="au-btn au-btn-icon au-btn--green au-btn--small" >
+
+                            <a href=""> <i class="zmdi zmdi-plus"></i>Excel</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br> <input id="myInput" type="text" name="rechercher" placeholder="rechercher ..."> <br>
+            <div class="table-responsive table-responsive-data2">
+                <table class="table table-data2">
+                    <thead>
+                    <tr>
+                        <th>
+                            <label class="au-checkbox">
+                                <input type="checkbox">
+                                <span class="au-checkmark"></span>
+                            </label>
+                        </th>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>IsActive</th>
+                        <th>Roles</th>
+                        <th>actions</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    {% for user in users %}
+                        <tr class="tr-shadow">
+                            <td>
+                                <label class="au-checkbox">
+                                    <input type="checkbox">
+                                    <span class="au-checkmark"></span>
+                                </label>
+                            </td>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.password }}</td>
+                            <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                            <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+
+                            <td>
+                                <div class="table-data-feature">
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
+                                        <i class="zmdi zmdi-mail-send"></i>
+                                    </button>
+                                    <button >
+
+                                        <a href="{{ path('user_show', {'id': user.id}) }}" class="item " data-toggle="modal" data-target="#myModal"data-placement="top" title="Edit" > <i class="zmdi zmdi-edit"></i></a>
+
+                                    </button>
+
+
+                                    <button>
+                                        <a href="{{ path('user_edit', {'id': user.id}) }}"class="item" data-toggle="tooltip" data-placement="top" title="Delete"> <i class="zmdi zmdi-delete"></i></a>
+
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    {% else %}
+                        <tr>
+                            <td colspan="6">no records found</td>
+                        </tr>
+
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- END DATA TABLE -->
+        </div>
+
+        <br>
+
+        {# display navigation #}
+        <div class="navigation text-center">
+            <h3>  <b>  {</b> </h3>
+            <style>
+
+                .text-center {
+                    text-align: center!important;
+
+                    margin-left: 530px;
+                }
+
+            </style>
+        </div>
+
+
+        <br> <br>
+    </div>
+
+    </div>
 
 {% endblock %}

@@ -6,3 +6,8 @@ logout:
 
 captcha_routing:
   resource: "@CaptchaBundle/Resources/config/routing.yml"
+
+user_pdf:
+  path:     /pdf
+  defaults: { _controller: "UserController:user:pdf" }
+  methods:  GET
