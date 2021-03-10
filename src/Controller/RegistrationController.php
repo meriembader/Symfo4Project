@@ -35,7 +35,7 @@ class RegistrationController extends Controller {
             $this->addFlash('success', 'Votre compte à bien été enregistré.');
             //return $this->redirectToRoute('login');
         }
-        return $this->render('registration/register.html.twig', ['form' => $form->createView(), 'mainNavRegistration' => true, 'title' => 'Inscription']);
+        return $this->render('registration/register.html.twig', ['form' => $form->createView(), 'mainNavRegistration' => true]);
     }
 
 }
