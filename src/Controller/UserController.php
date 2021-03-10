@@ -8,7 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 /**
  * @Route("/user")
  */
@@ -27,6 +28,52 @@ class UserController extends AbstractController
             'users' => $users,
         ]);
     }
+
+    /**
+     * @Route("/listUserPDF", name="user_listPdf", methods={"GET"})
+     */
+    public function listUserPDF(): Response
+    {
+
+
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $users = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
+
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('user/listUserPDF.html.twig', [
+            'users' => $users,
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A3', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+
+
+
+
+
+    }
+
+
+
 
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})

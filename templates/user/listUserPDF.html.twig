@@ -1,0 +1,37 @@
+
+{% block body %}
+
+    <h4>Liste des Utilisateurs</h4>
+    <br>
+    <br>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>IsActive</th>
+            <th>Roles</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+
+            </tr>
+        {% else %}
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
