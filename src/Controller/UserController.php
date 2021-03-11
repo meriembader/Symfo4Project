@@ -8,6 +8,7 @@ use PDO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -89,19 +90,23 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/listUserExcel", name="user_listExcel", methods={"GET"})
+     * @Route("/listExcel", name="user_listExcel", methods={"GET"})
      */
-    /*public function excel(): Response
+    public function excel(): Response
     {
-
         $spreadsheet = new Spreadsheet();
 
-
-       $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Hello World !');
+        /* @var $sheet \PhpOffice\PhpSpreadsheet\Writer\Xlsx\Worksheet */
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'id');
+        $sheet->setCellValue('B1', 'email');
+        $sheet->setCellValue('C1', 'password');
+        $sheet->setCellValue('D1', 'password');
+        $sheet->setCellValue('D1', 'status');
         $sheet->setTitle("My First Worksheet");
+
         // Instantiate Dompdf with our options
-        $spreadsheet = new $spreadsheet();
+        $sheet = new Spreadsheet();
         $users = $this->getDoctrine()
             ->getRepository(User::class)
             ->findAll();
@@ -111,22 +116,23 @@ class UserController extends AbstractController
         $html = $this->renderView('user/listUserExcel.html.twig', [
             'users' => $users,
         ]);
+
+
         // Create your Office 2007 Excel (XLSX Format)
         $writer = new Xlsx($spreadsheet);
 
-        // In this case, we want to write the file in the public directory
-        $publicDirectory = $this->get('kernel')->getProjectDir() . '/public';
-        // e.g /var/www/project/public/my_first_excel_symfony4.xlsx
-        $excelFilepath =  $publicDirectory . '/my_first_excel_symfony4.xlsx';
+        // Create a Temporary file in the system
+        $fileName = 'my_first_excel_symfony4.xlsx';
+        $temp_file = tempnam(sys_get_temp_dir(), $fileName);
 
-        // Create the file
-        $writer->save($excelFilepath);
+        // Create the excel file in the tmp directory of the system
+        $writer->save($temp_file);
 
-        // Return a text response to the browser saying that the excel was succesfully created
-        return new Response("Excel generated succesfully");
+        // Return the excel file as an attachment
+        return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
+
     }
 
-*/
 
 
 
