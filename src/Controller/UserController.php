@@ -15,6 +15,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Mukadi\Chart\Builder;
 use Mukadi\Chart\Utils\RandomColorFactory;
 use Mukadi\Chart\Chart;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 /**
  * @Route("/user")
  */
@@ -77,6 +79,49 @@ class UserController extends AbstractController
 
 
     }
+
+    /**
+     * @Route("/listUserExcel", name="user_listExcel", methods={"GET"})
+     */
+    /*public function excel(): Response
+    {
+
+        $spreadsheet = new Spreadsheet();
+
+
+       $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Hello World !');
+        $sheet->setTitle("My First Worksheet");
+        // Instantiate Dompdf with our options
+        $spreadsheet = new $spreadsheet();
+        $users = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
+
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('user/listUserExcel.html.twig', [
+            'users' => $users,
+        ]);
+        // Create your Office 2007 Excel (XLSX Format)
+        $writer = new Xlsx($spreadsheet);
+
+        // In this case, we want to write the file in the public directory
+        $publicDirectory = $this->get('kernel')->getProjectDir() . '/public';
+        // e.g /var/www/project/public/my_first_excel_symfony4.xlsx
+        $excelFilepath =  $publicDirectory . '/my_first_excel_symfony4.xlsx';
+
+        // Create the file
+        $writer->save($excelFilepath);
+
+        // Return a text response to the browser saying that the excel was succesfully created
+        return new Response("Excel generated succesfully");
+    }
+
+*/
+
+
+
 
 
 
@@ -172,11 +217,5 @@ class UserController extends AbstractController
         ]);
     }
 
-
-
-
-    public function chart() {
-
-    }
 
 }
