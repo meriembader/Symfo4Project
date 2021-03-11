@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67ba85aa78a9137a5f8778b9f1df0d1d",
+    "content-hash": "ea7fd094cf57b7402f43645cd55a5c84",
     "packages": [
         {
             "name": "captcha-com/captcha",
@@ -2033,6 +2033,42 @@
                 }
             ],
             "time": "2020-12-14T12:56:38+00:00"
+        },
+        {
+            "name": "mukadi/chartjs-builder",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbo2olivier/mukadi-chartjs-builder.git",
+                "reference": "968e95d76f5a1cbb78e1866b77606a77e082ad01"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbo2olivier/mukadi-chartjs-builder/zipball/968e95d76f5a1cbb78e1866b77606a77e082ad01",
+                "reference": "968e95d76f5a1cbb78e1866b77606a77e082ad01",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mukadi\\Chart\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Olivier M. Mukadi",
+                    "email": "olivier.m@geniusconception.com"
+                }
+            ],
+            "description": "generate beautiful charts directly from SQL query in PHP",
+            "time": "2020-11-13T11:35:58+00:00"
         },
         {
             "name": "phenx/php-font-lib",

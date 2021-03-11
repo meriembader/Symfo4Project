@@ -11,3 +11,4 @@ user_pdf:
   path:     /pdf
   defaults: { _controller: "UserController:user:pdf" }
   methods:  GET
+
