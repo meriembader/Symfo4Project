@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\User1Type;
+use PDO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Knp\Component\Pager\PaginatorInterface;
+use Mukadi\Chart\Builder;
+use Mukadi\Chart\Utils\RandomColorFactory;
+use Mukadi\Chart\Chart;
 /**
  * @Route("/user")
  */
@@ -25,11 +29,7 @@ class UserController extends AbstractController
             ->getRepository(User::class)
             ->findAll();
 
-        $user  = $this->get('knp_paginator')->paginate(
-            $users,
-            $request->query->get('page', 1)/*le numéro de la page à afficher*/,
-            4/*nbre d'éléments par page*/
-        );
+
         return $this->render('user/index.html.twig', [
             'users' => $users,
         ]);
@@ -147,4 +147,36 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+
+
+    /**
+     * @Route("/statics", name="user_st", methods={"GET"})
+     */
+    public function stat()
+    {
+        $connection = new PDO('mysql:dbname=fymfo4;host=127.0.0.1','root','');
+        $builder = new Builder($connection);
+
+        $builder
+//
+            ->query("SELECT COUNT(*) total, is_active FROM user GROUP BY is_active")
+            ->addDataset('total','Total',[
+                "backgroundColor" => RandomColorFactory::getRandomRGBAColors(24)
+            ])
+            ->labels('is_active');
+
+        $chart = $builder->buildChart('chart',Chart::PIE);
+        return $this->render('user/chart.html.twig',[
+            "chart" => $chart
+        ]);
+    }
+
+
+
+
+    public function chart() {
+
+    }
+
 }
