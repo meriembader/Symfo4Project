@@ -25,13 +25,21 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(Request $request): Response
+    public function index(Request $request,  PaginatorInterface $paginator): Response
     {
         $users = $this->getDoctrine()
             ->getRepository(User::class)
             ->findAll();
 
-
+        // Paginate the results of the query
+        $users = $paginator->paginate(
+        // Doctrine Query, not results
+            $users,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
         return $this->render('user/index.html.twig', [
             'users' => $users,
         ]);
